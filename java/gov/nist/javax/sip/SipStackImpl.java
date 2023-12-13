@@ -466,22 +466,34 @@ public class SipStackImpl extends SIPTransactionStack implements
 	// RFC3261: TLS_RSA_WITH_AES_128_CBC_SHA MUST be supported
 	// RFC3261: TLS_RSA_WITH_3DES_EDE_CBC_SHA SHOULD be supported for backwards
 	// compat
+	// JEJB: Add modern protocols (not necessary because this is server only)
 	private String[] cipherSuites = {
 			"TLS_RSA_WITH_AES_128_CBC_SHA", // AES difficult to get with
+			// Additions for sip stack upgrades
+			"TLS_AES_128_GCM_SHA256",
+			"TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA",
+			"TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+			"TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA",
+			"TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
 											// c++/Windows
 			// "TLS_RSA_WITH_3DES_EDE_CBC_SHA", // Unsupported by Sun impl,
-			"SSL_RSA_WITH_3DES_EDE_CBC_SHA", // For backwards comp., C++
+			// "SSL_RSA_WITH_3DES_EDE_CBC_SHA", // For backwards comp., C++
 
 			// JvB: patch from Sebastien Mazy, issue with mismatching
 			// ciphersuites
-			"TLS_DH_anon_WITH_AES_128_CBC_SHA",
-			"SSL_DH_anon_WITH_3DES_EDE_CBC_SHA", };
+			// "TLS_DH_anon_WITH_AES_128_CBC_SHA",
+			// "SSL_DH_anon_WITH_3DES_EDE_CBC_SHA",
+	};
 
+	// JEJB: update to modern TLS protocols, remove deprecated ones
 	// Supported protocols for TLS client: can be overridden by application
 	private String[] enabledProtocols = {
-			"SSLv3",
-			"SSLv2Hello",
-			"TLSv1"
+			//"SSLv3",
+			//"SSLv2Hello",
+			//"TLSv1",
+			"TLSv1.1",
+			"TLSv1.2",
+			"TLSv1.3",
 	};
 
 	/**
